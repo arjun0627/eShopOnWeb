@@ -5,21 +5,9 @@ pipeline {
     options {
         timestamps()
         disableConcurrentBuilds()
-        buildDiscarder(logRotator(numToKeepStr: '10'))
-    }
-
-    environment {
-        DOTNET_CLI_TELEMETRY_OPTOUT = '1'
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE = '1'
     }
 
     stages {
-
-        stage('Display Branch') {
-            steps {
-                echo "Branch Name : ${env.BRANCH_NAME}"
-            }
-        }
 
         stage('Checkout') {
             steps {
@@ -27,67 +15,32 @@ pipeline {
             }
         }
 
-        stage('Workspace Info') {
-            steps {
-                sh '''
-                    pwd
-                    ls -ltr
-                '''
-            }
-        }
-
         stage('Restore') {
             steps {
-                sh '''
-                    dotnet restore
-                '''
+                sh 'dotnet restore eShopOnWeb.sln'
             }
         }
 
         stage('Build') {
             steps {
-                sh '''
-                    dotnet build --configuration Release --no-restore
-                '''
+                sh 'dotnet build eShopOnWeb.sln --configuration Release --no-restore'
             }
         }
 
         stage('Test') {
             steps {
-                sh '''
-                    dotnet test --configuration Release --no-build
-                '''
-            }
-        }
-
-        stage('Publish') {
-            steps {
-                sh '''
-                    mkdir -p publish
-                    dotnet publish --configuration Release -o publish
-                '''
-            }
-        }
-
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: 'publish/**', fingerprint: true
+                sh 'dotnet test eShopOnWeb.sln --configuration Release --no-build'
             }
         }
     }
 
     post {
-
         success {
-            echo "Build Successful : ${env.BRANCH_NAME}"
+            echo "Build Successful"
         }
 
         failure {
-            echo "Build Failed : ${env.BRANCH_NAME}"
-        }
-
-        always {
-            cleanWs()
+            echo "Build Failed"
         }
     }
 }
