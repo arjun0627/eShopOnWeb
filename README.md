@@ -166,6 +166,7 @@ You can also run the applications by using the instructions located in their `Do
 
 ## Community Extensions
 
+Testing Jenkins Multibranch Pipeline from feature/demo branch
 We have some great contributions from the community, and while these aren't maintained by Microsoft we still want to highlight them.
 
 [eShopOnWeb VB.NET](https://github.com/VBAndCs/eShopOnWeb_VB.NET) by Mohammad Hamdy Ghanem
