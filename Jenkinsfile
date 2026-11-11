@@ -17,30 +17,30 @@ pipeline {
 
         stage('Restore') {
             steps {
-                sh 'dotnet restore eShopOnWeb.sln'
+                sh 'dotnet restore eShopOnWeb.sln --disable-parallel'
             }
         }
 
         stage('Build') {
             steps {
-                sh 'dotnet build eShopOnWeb.sln --configuration Release --no-restore'
+                sh 'dotnet build eShopOnWeb.sln --configuration Release --no-restore -m:1'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'dotnet test eShopOnWeb.sln --configuration Release --no-build'
+                sh 'dotnet test eShopOnWeb.sln --configuration Release --no-build --no-restore'
             }
         }
     }
 
     post {
         success {
-            echo "Build Successful"
+            echo 'Build Successful'
         }
 
         failure {
-            echo "Build Failed"
+            echo 'Build Failed'
         }
     }
 }
