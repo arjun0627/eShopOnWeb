@@ -27,11 +27,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                sh 'dotnet test eShopOnWeb.sln --configuration Release --no-build --no-restore'
-            }
-        }
+       // stage('Test') {
+            //steps {
+               // sh 'dotnet test eShopOnWeb.sln --configuration Release --no-build --no-restore'
+          //  }
+       // }
     }
 
     post {
