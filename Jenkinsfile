@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sh '''
                 cd src/Web/bin/Release/net8.0
-                zip -r /tmp/app.zip .
+                zip -r /tmp/app-v2.zip .
                 '''
             }
         }
@@ -38,7 +38,7 @@ pipeline {
         stage('Upload to S3') {
             steps {
                 sh '''
-                aws s3 cp /tmp/app.zip s3://eshop-demo-artifacts-nagarjun/
+                aws s3 cp /tmp/app-v2.zip s3://eshop-demo-artifacts-nagarjun/
                 '''
             }
         }
