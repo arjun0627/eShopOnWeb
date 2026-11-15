@@ -30,7 +30,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'sonarcloud-token', variable: 'SONAR_TOKEN')]) {
                     sh '''
-                    ~/.dotnet/tools/dotnet-sonarscanner begin \
+                    /home/ubuntu/.dotnet/tools/dotnet-sonarscanner begin \
                     /k:"arjun0627_eShopOnWeb" \
                     /o:"arjun0627" \
                     /d:sonar.token="$SONAR_TOKEN" \
@@ -38,7 +38,7 @@ pipeline {
 
                     dotnet build eShopOnWeb.sln --configuration Release --no-restore
 
-                    ~/.dotnet/tools/dotnet-sonarscanner end \
+                    /home/ubuntu/.dotnet/tools/dotnet-sonarscanner end \
                     /d:sonar.token="$SONAR_TOKEN"
                     '''
                 }
