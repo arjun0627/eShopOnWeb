@@ -1,5 +1,4 @@
 pipeline {
-
     agent any
 
     options {
@@ -27,11 +26,29 @@ pipeline {
             }
         }
 
-       // stage('Test') {
-            //steps {
-               // sh 'dotnet test eShopOnWeb.sln --configuration Release --no-build --no-restore'
-          //  }
-       // }
+        stage('Package') {
+            steps {
+                sh '''
+                cd src/Web/bin/Release/net8.0
+                zip -r /tmp/app.zip .
+                '''
+            }
+        }
+
+        stage('Upload to S3') {
+            steps {
+                sh '''
+                aws s3 cp /tmp/app.zip s3://eshop-demo-artifacts-nagarjun/
+                '''
+            }
+        }
+
+        // stage('Test') {
+        //     steps {
+        //         sh 'dotnet test eShopOnWeb.sln --configuration Release --no-build --no-restore'
+        //     }
+        // }
+
     }
 
     post {
